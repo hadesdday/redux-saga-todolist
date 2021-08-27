@@ -59,3 +59,4 @@ const c = hello();
 console.log(c.next());
 console.log(c.next());
 console.log(c.next());
+console.log(c.next());
