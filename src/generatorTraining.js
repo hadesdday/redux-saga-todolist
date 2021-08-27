@@ -14,6 +14,10 @@ console.log("generator function learning ...");
 //   //=> cách khác để thoát khỏi generator function -> throw error
 // }
 
+//function* add(a,b){
+//return a+b;
+//}
+
 // const a = hello(); // iterators
 // console.log(a.next());
 // console.log(a.next());
