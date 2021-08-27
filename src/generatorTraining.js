@@ -15,6 +15,7 @@ console.log("generator function learning ...");
 // }
 
 //function* add(a,b){
+//console.log(a,' ',b);
 //return a+b;
 //}
 
