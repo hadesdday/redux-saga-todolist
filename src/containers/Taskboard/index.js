@@ -8,18 +8,19 @@ import TaskForm from "../../components/TaskForm";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as taskActions from "../../actions/task";
+import * as modalActions from "../../actions/modal";
 import SearchBox from "../../components/SearchBox";
 
 function Taskboard(props) {
   const { classes } = props;
 
-  // useEffect(() => {
-  //   const { taskActionCreators } = props;
-  //   const { fetchTasks } = taskActionCreators;
-  //   // const { fetchTasksRequest } = taskActionCreators;
-  //   fetchTasks();
-  //   // fetchTasksRequest();
-  // }, []);
+  useEffect(() => {
+    const { taskActionCreators } = props;
+    const { fetchTasks } = taskActionCreators;
+    // const { fetchTasksRequest } = taskActionCreators;
+    fetchTasks();
+    // fetchTasksRequest();
+  }, []);
 
   const { listTask, filterTask } = props;
 
@@ -40,7 +41,10 @@ function Taskboard(props) {
   const [open, setOpen] = useState(false);
 
   function handleClickOpen() {
-    setOpen(true);
+    const { modalActions } = props;
+    const { showModal, changeModalTitle, changeModalContent } = modalActions;
+    showModal();
+    changeModalTitle("Addd");
   }
 
   function handleClose() {
@@ -115,6 +119,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     taskActionCreators: bindActionCreators(taskActions, dispatch),
+    modalActions: bindActionCreators(modalActions, dispatch),
   };
 };
 
