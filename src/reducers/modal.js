@@ -17,6 +17,8 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         showModal: false,
+        title: "",
+        component: null,
       };
     case types.CHANGE_MODAL_TITLE:
       const { title } = action.payload;
@@ -28,7 +30,7 @@ const reducer = (state = initialState, action) => {
       const { component } = action.payload;
       return {
         ...state,
-        content: component,
+        component: component,
       };
     default:
       return state;

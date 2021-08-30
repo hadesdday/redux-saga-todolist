@@ -7,7 +7,6 @@ const styles = (theme) => ({
   paper: {
     backgroundColor: theme.color.paper,
     boxShadow: theme.shadows[5],
-    // padding: theme.spacing(2, 4, 3),
   },
   header: {
     backgroundColor: theme.color.darkPrimary,
@@ -26,9 +25,6 @@ const styles = (theme) => ({
   },
   icon: {
     cursor: "pointer",
-  },
-  textField: {
-    width: theme.textField.width,
   },
 });
 

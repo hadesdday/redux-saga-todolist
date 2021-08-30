@@ -15,7 +15,7 @@ export const changeModalTitle = (title) => ({
   },
 });
 
-export const changeModelContent = (component) => ({
+export const changeModalContent = (component) => ({
   type: modelTypes.CHANGE_MODAL_CONTENT,
   payload: {
     component,

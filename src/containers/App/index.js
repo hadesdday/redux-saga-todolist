@@ -8,10 +8,9 @@ import styles from "./styles";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import GlobalLoading from "../../components/GlobalLoading";
+import CommonModal from "../../components/Modal/index";
 
-function App(props) {
-  //  const { classes } = props;
-
+function App() {
   const store = configureStore();
 
   return (
@@ -19,7 +18,8 @@ function App(props) {
       <ThemeProvider theme={theme}>
         <div className="App">
           <ToastContainer />
-          <GlobalLoading/>
+          <CommonModal />
+          <GlobalLoading />
           <Taskboard />
         </div>
       </ThemeProvider>

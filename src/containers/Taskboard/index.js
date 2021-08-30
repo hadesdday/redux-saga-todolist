@@ -1,10 +1,10 @@
-import { Box, Button, Grid, withStyles } from "@material-ui/core";
+import { Button, Grid, withStyles } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import styles from "./styles";
 import AddIcon from "@material-ui/icons/Add";
 import { STATUSES, STATUS_CODE } from "../../constants";
 import TaskList from "../../components/TaskList";
-import TaskForm from "../../components/TaskForm";
+import TaskForm from "../../containers/TaskForm";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as taskActions from "../../actions/task";
@@ -41,10 +41,12 @@ function Taskboard(props) {
   const [open, setOpen] = useState(false);
 
   function handleClickOpen() {
-    const { modalActions } = props;
-    const { showModal, changeModalTitle, changeModalContent } = modalActions;
+    const { modalActionsCreators } = props;
+    const { showModal, changeModalTitle, changeModalContent } =
+      modalActionsCreators;
     showModal();
-    changeModalTitle("Addd");
+    changeModalTitle("Add new task to your list");
+    changeModalContent(<TaskForm />);
   }
 
   function handleClose() {
@@ -104,7 +106,7 @@ function Taskboard(props) {
         </Button>
         {renderSearchBox()}
         {renderBoard()}
-        {renderForm()}
+        {/* {renderForm()} */}
       </div>
     </>
   );
@@ -119,7 +121,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     taskActionCreators: bindActionCreators(taskActions, dispatch),
-    modalActions: bindActionCreators(modalActions, dispatch),
+    modalActionsCreators: bindActionCreators(modalActions, dispatch),
   };
 };
 
