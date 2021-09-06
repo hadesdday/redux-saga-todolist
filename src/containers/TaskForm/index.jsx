@@ -61,6 +61,7 @@ function TaskForm(props) {
                     variant="contained"
                     onClick={form.reset}
                     style={{ marginLeft: "10px" }}
+                    disabled={pristine}
                   >
                     Clear values
                   </Button>

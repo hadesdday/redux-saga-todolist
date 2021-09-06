@@ -1,7 +1,7 @@
 const validate = (values) => {
   const errors = {};
 
-  //theo name cua input
+  //check valid theo name cua input
   //   const nameErrors = errors["name"];
   //   const descriptionErrors = errors["description"];
 
