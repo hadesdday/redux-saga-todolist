@@ -1,22 +1,50 @@
 {
-    "tasks" :[
-        {
-        "id" : 1,
-        "title" :"Learn reduxxxxx",
-        "description":  "learning reduxxxxxx...",
-        "status": 0
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Learn reduxxxxx",
+      "description": "learning reduxxxxxx...",
+      "status": 0
     },
-         {
-        "id" : 2,
-        "title" :"Learn reactjs",
-        "description":  "Learning reactjsssssss...",
-        "status": 1
+    {
+      "id": 2,
+      "title": "Learn reactjs",
+      "description": "Learning reactjsssssss...",
+      "status": 1
     },
-         {
-        "id" : 3,
-        "title" :"Learn reactjss",
-        "description":  "Learning reactjsssssss...",
-        "status": 2
+    {
+      "id": 3,
+      "title": "Learn reactjss",
+      "description": "Learning reactjsssssss...",
+      "status": 2
+    },
+    {
+      "title": "an com...",
+      "description": "luc 19h ",
+      "status": 0,
+      "id": 4
+    },
+    {
+      "title": "choi game",
+      "description": " lol",
+      "status": 0,
+      "id": 5
+    },
+    {
+      "title": "awdds",
+      "status": 0,
+      "id": 6
+    },
+    {
+      "title": "awdaw",
+      "status": 0,
+      "id": 7
+    },
+    {
+      "title": "nruuiad",
+      "description": "burh",
+      "status": 0,
+      "id": 8
     }
-]
+  ]
 }

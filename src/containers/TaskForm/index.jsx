@@ -1,20 +1,23 @@
 import { Box, Button, Grid } from "@material-ui/core";
-import styles from "./styles";
 import { withStyles } from "@material-ui/styles";
-import * as modalActions from "../../actions/modal";
+import { Form } from "react-final-form";
 import { connect } from "react-redux";
 import { bindActionCreators, compose } from "redux";
-import { Form } from "react-final-form";
+import * as modalActions from "../../actions/modal";
+import * as taskActions from "../../actions/task";
 import RenderTextField from "../../components/FormHelper/TextField";
 import FormStateToRedux from "./FormStateToRedux";
+import styles from "./styles";
 import validate from "./validate";
 
 function TaskForm(props) {
-  const { classes, modalActionsCreators } = props;
+  const { classes, modalActionsCreators, taskActionsCreators } = props;
   const { hideModal } = modalActionsCreators;
+  const { addTask } = taskActionsCreators;
 
   function handleSubmitForm(data) {
-    console.log("data : ", data);
+    const { title, description } = data;
+    addTask(title, description);
   }
 
   return (
@@ -32,16 +35,16 @@ function TaskForm(props) {
         validate={validate}
         //có thể điền các action của reducer form ở dưới (có thể vào redux tool
         //xem form reducer có gì)
-        render={({ handleSubmit, pristine, form, submitting, invalid }) => (
+        render={({ handleSubmit, pristine, form, submitting }) => (
           <form onSubmit={handleSubmit}>
             <FormStateToRedux form="TASK_MANAGEMENT" />
             <Grid container spacing={4}>
               <Grid item md={12}>
                 <RenderTextField
                   id="standard-basic"
-                  label="Name"
+                  label="Title"
                   className={classes.textField}
-                  name="name"
+                  name="title"
                 />
               </Grid>
               <Grid item md={12}>
@@ -61,6 +64,7 @@ function TaskForm(props) {
                     variant="contained"
                     onClick={form.reset}
                     style={{ marginLeft: "10px" }}
+                    disabled={pristine}
                   >
                     Clear values
                   </Button>
@@ -77,7 +81,7 @@ function TaskForm(props) {
                       variant="contained"
                       color="primary"
                       type="submit"
-                      disabled={invalid || submitting}
+                      disabled={submitting || pristine}
                     >
                       Save
                     </Button>
@@ -96,6 +100,7 @@ function TaskForm(props) {
 const mapDispatchToProps = (dispatch) => {
   return {
     modalActionsCreators: bindActionCreators(modalActions, dispatch),
+    taskActionsCreators: bindActionCreators(taskActions, dispatch),
   };
 };
 
