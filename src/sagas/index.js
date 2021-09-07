@@ -1,21 +1,25 @@
 import {
   call,
-  fork,
-  take,
-  put,
   delay,
-  takeLatest,
+  fork,
+  put,
   select,
+  take,
+  takeEvery,
+  takeLatest,
 } from "redux-saga/effects";
-import * as taskTypes from "../constants/task";
-import * as taskApis from "../apis/task";
-import { STATUS_CODE } from "../constants";
 import {
+  addTaskFailed,
+  addTaskSuccess,
   fetchTasksFailed,
   fetchTasksSuccess,
   filterTaskSuccess,
 } from "../actions/task";
 import { hideLoading, showLoading } from "../actions/ui";
+import * as taskApis from "../apis/task";
+import { hideModal } from "../actions/modal";
+import { STATUSES, STATUS_CODE } from "../constants";
+import * as taskTypes from "../constants/task";
 
 function* watchFetchTasksAction() {
   //Vi du ve code document o mot so cong ty
@@ -67,12 +71,35 @@ function* filterTaskSaga({ payload }) {
   yield put(filterTaskSuccess(filteredTasks));
 }
 
+function* addTaskSaga({ payload }) {
+  const { title, description } = payload;
+
+  yield put(showLoading());
+
+  const res = yield call(taskApis.addTask, {
+    title,
+    description,
+    status: STATUSES[0].value,
+  });
+
+  const { data, status } = res;
+
+  if (status === STATUS_CODE.CREATED) {
+    yield put(addTaskSuccess(data));
+    yield put(hideModal());
+  } else {
+    yield put(addTaskFailed(data));
+  }
+  yield delay(1000);
+  yield put(hideLoading());
+}
+
 function* rootSaga() {
   yield fork(watchFetchTasksAction); // background process
   yield fork(watchCreateTaskAction);
   //action filterTask luon duoc lang nghe nho takeLatest
   yield takeLatest(taskTypes.FILTER_TASK, filterTaskSaga);
-
+  yield takeEvery(taskTypes.ADD_TASK, addTaskSaga);
   //takeEvery : goi lien tuc khong can biet la action truoc do da chay xong chua
   //yield takeEvery(taskTypes.FILTER_TASK, filterTaskSaga);
 }

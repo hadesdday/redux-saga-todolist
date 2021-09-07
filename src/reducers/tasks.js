@@ -36,6 +36,28 @@ const reducer = (state = initialState, action) => {
       };
     }
 
+    case taskConstants.ADD_TASK: {
+      return {
+        ...state,
+      };
+    }
+
+    case taskConstants.ADD_TASK_SUCCESS: {
+      const { data } = action.payload;
+      return {
+        ...state,
+        listTasks: [data].concat(state.listTasks),
+      };
+    }
+
+    case taskConstants.ADD_TASK_FAILED: {
+      const { error } = action.payload;
+      toastError(error);
+      return {
+        ...state,
+      };
+    }
+
     default:
       return state;
   }
