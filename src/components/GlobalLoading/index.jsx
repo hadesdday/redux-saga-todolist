@@ -1,8 +1,8 @@
 import { withStyles } from "@material-ui/styles";
-import styles from "./styles";
-import LoadingIcon from "../../assets/images/loading.gif";
-import { compose } from "redux";
 import { connect } from "react-redux";
+import { compose } from "redux";
+import LoadingIcon from "../../assets/images/loading.gif";
+import styles from "./styles";
 // import * as uiActions from "../../actions/ui";
 
 function GlobalLoading(props) {
