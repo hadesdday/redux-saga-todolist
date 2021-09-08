@@ -43,7 +43,8 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-# Library used in this project :
+# Libraries used in this project :
+
 - ReactJS
 - Redux
 - Redux-saga

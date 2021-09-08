@@ -2,22 +2,20 @@ import {
   call,
   delay,
   fork,
-  put,
-  select,
-  take,
+  put, take,
   takeEvery,
-  takeLatest,
+  takeLatest
 } from "redux-saga/effects";
+import { hideModal } from "../actions/modal";
 import {
   addTaskFailed,
   addTaskSuccess,
+  fetchTasks,
   fetchTasksFailed,
-  fetchTasksSuccess,
-  filterTaskSuccess,
+  fetchTasksSuccess
 } from "../actions/task";
 import { hideLoading, showLoading } from "../actions/ui";
 import * as taskApis from "../apis/task";
-import { hideModal } from "../actions/modal";
 import { STATUSES, STATUS_CODE } from "../constants";
 import * as taskTypes from "../constants/task";
 
@@ -33,11 +31,14 @@ function* watchFetchTasksAction() {
   //b5 :thuc thi cac cong viec tiep theo
   //end
   while (true) {
-    yield take(taskTypes.FETCH_TASK);
+    //yield take(taskTypes.FETCH_TASK);
+
+    const action = yield take(taskTypes.FETCH_TASK); //FETCH_TASK dispatch => chay phan code ben duoi
     yield put(showLoading());
+    const { params } = action.payload;
     //tu day tro xuong bi block va chi khi nao fetchTask thi moi chay tiep
     //block
-    const res = yield call(taskApis.getTasks);
+    const res = yield call(taskApis.getTasks, params);
     //block cho den khi call xong
     const { status, data } = res;
 
@@ -62,13 +63,16 @@ function* watchCreateTaskAction() {
 function* filterTaskSaga({ payload }) {
   yield delay(500, true);
   const { keyword } = payload;
-  const tasks = yield select((state) => state.task.listTasks);
+  // const tasks = yield select((state) => state.task.listTasks);
 
-  const filteredTasks = tasks.filter((task) =>
-    task.title.trim().toLowerCase().includes(keyword.trim().toLowerCase())
-  );
+  // const filteredTasks = tasks.filter((task) =>
+  //   task.title.trim().toLowerCase().includes(keyword.trim().toLowerCase())
+  // );
 
-  yield put(filterTaskSuccess(filteredTasks));
+  // yield put(filterTaskSuccess(filteredTasks));
+
+  yield put(fetchTasks({ q: keyword }));
+  //yield put(hideLoading());
 }
 
 function* addTaskSaga({ payload }) {
