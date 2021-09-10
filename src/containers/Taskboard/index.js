@@ -1,28 +1,42 @@
 import { Button, Grid, withStyles } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import styles from "./styles";
 import AddIcon from "@material-ui/icons/Add";
-import { STATUSES, STATUS_CODE } from "../../constants";
-import TaskList from "../../components/TaskList";
-import TaskForm from "../../containers/TaskForm";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as taskActions from "../../actions/task";
 import * as modalActions from "../../actions/modal";
+import * as taskActions from "../../actions/task";
 import SearchBox from "../../components/SearchBox";
+import TaskList from "../../components/TaskList";
+import { STATUSES } from "../../constants";
+import TaskForm from "../../containers/TaskForm";
+import styles from "./styles";
 
 function Taskboard(props) {
   const { classes } = props;
 
+  const { modalActionsCreators } = props;
+  const { showModal, changeModalTitle, changeModalContent } =
+    modalActionsCreators;
+
+  const { taskActionCreators } = props;
+  const { fetchTasks, setEditingTask } = taskActionCreators;
+
   useEffect(() => {
-    const { taskActionCreators } = props;
-    const { fetchTasks } = taskActionCreators;
-    // const { fetchTasksRequest } = taskActionCreators;
     fetchTasks();
-    // fetchTasksRequest();
   }, []);
 
-  const { listTask, filterTask } = props;
+  const { listTask } = props;
+
+  function handleEditTask(task) {
+    setEditingTask({
+      title: task.title,
+      description: task.description,
+      status: task.status,
+    });
+    showModal();
+    changeModalTitle("Edit a task from your list");
+    changeModalContent(<TaskForm />);
+  }
 
   function renderBoard() {
     let xhtml = null;
@@ -32,39 +46,35 @@ function Taskboard(props) {
           const listFiltered = listTask.filter(
             (task) => task.status === status.value
           );
-          return <TaskList key={index} tasks={listFiltered} status={status} />;
+          return (
+            <TaskList
+              key={index}
+              tasks={listFiltered}
+              status={status}
+              onEdit={handleEditTask}
+            />
+          );
         })}
       </Grid>
     );
     return xhtml;
   }
-  const [open, setOpen] = useState(false);
 
   function handleClickOpen() {
-    const { modalActionsCreators } = props;
-    const { showModal, changeModalTitle, changeModalContent } =
-      modalActionsCreators;
+    setEditingTask({
+      title: "",
+      description: "",
+      status: STATUSES[0].value,
+    });
     showModal();
     changeModalTitle("Add new task to your list");
     changeModalContent(<TaskForm />);
   }
 
-  function handleClose() {
-    setOpen(false);
-  }
-
-  function renderForm() {
-    let xhtml = null;
-    xhtml = <TaskForm open={open} handleClose={handleClose} />;
-    return xhtml;
-  }
-
   function loadData() {
     const { taskActionCreators } = props;
     const { fetchTasks } = taskActionCreators;
-    // const { fetchTasksRequest } = taskActionCreators;
     fetchTasks();
-    // fetchTasksRequest();
   }
 
   function handleChange(e) {
@@ -106,7 +116,6 @@ function Taskboard(props) {
         </Button>
         {renderSearchBox()}
         {renderBoard()}
-        {/* {renderForm()} */}
       </div>
     </>
   );
