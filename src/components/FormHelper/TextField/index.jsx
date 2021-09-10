@@ -4,32 +4,6 @@ import { Field } from "react-final-form";
 function renderTextField(props) {
   const { multiline, maxRows, label } = props;
 
-  const composeValidators =
-    (...validators) =>
-    (value) =>
-      validators.reduce(
-        (error, validator) => error || validator(value),
-        undefined
-      );
-
-  const required = (value) => {
-    let error = "Required";
-
-    if (value !== null && typeof value !== "undefined" && value.trim() !== "") {
-      error = null;
-    }
-    return error;
-  };
-
-  const minLength = (value) => {
-    let error = "Input length must be greater than five";
-
-    if (value.length > 5) {
-      error = null;
-    }
-    return error;
-  };
-
   const useHelperTextStyles = makeStyles(() => ({
     root: {
       color: "red",

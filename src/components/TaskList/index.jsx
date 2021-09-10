@@ -4,7 +4,7 @@ import TaskItem from "../TaskItem";
 import styles from "./styles";
 
 function TaskList(props) {
-  const { classes, tasks, status } = props;
+  const { classes, tasks, status, onEdit } = props;
 
   return (
     <>
@@ -14,8 +14,15 @@ function TaskList(props) {
         </Box>
 
         <div className={classes.wrapperListTask}>
-          {tasks.map((task, index) => {
-            return <TaskItem key={task.id} task={task} status={status} />;
+          {tasks.map((task) => {
+            return (
+              <TaskItem
+                key={task.id}
+                task={task}
+                status={status}
+                onEdit={() => onEdit(task)}
+              />
+            );
           })}
         </div>
       </Grid>

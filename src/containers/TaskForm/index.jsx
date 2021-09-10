@@ -23,11 +23,13 @@ function TaskForm(props) {
   return (
     <>
       <Form
-        initialValues={
-          {
-            //same as reducers here
-          }
-        }
+        initialValues={{
+          //same as reducers here
+          title: props.taskEditing ? props.taskEditing.title : "",
+          description: props.taskEditing.description
+            ? props.taskEditing.description
+            : "",
+        }}
         onSubmit={(values) => {
           // send values to the cloud
           handleSubmitForm(values);
@@ -97,6 +99,12 @@ function TaskForm(props) {
   );
 }
 
+const mapStateToProps = (state) => {
+  return {
+    taskEditing: state.task.taskEditing,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     modalActionsCreators: bindActionCreators(modalActions, dispatch),
@@ -104,7 +112,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const withConnect = connect(null, mapDispatchToProps);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 const composer = compose(withStyles(styles), withConnect);
 

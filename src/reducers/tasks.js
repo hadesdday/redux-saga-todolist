@@ -1,8 +1,14 @@
+import { STATUSES } from "../constants";
 import * as taskConstants from "../constants/task";
 import { toastError } from "../helpers/toastHelper";
 
 const initialState = {
   listTasks: [],
+  taskEditing: {
+    title: "",
+    description: "",
+    status: STATUSES[0].value,
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -55,6 +61,18 @@ const reducer = (state = initialState, action) => {
       toastError(error);
       return {
         ...state,
+      };
+    }
+
+    case taskConstants.SET_TASK_EDITING: {
+      const { task } = action.payload;
+      return {
+        ...state,
+        taskEditing: {
+          title: task.title,
+          description: task.description,
+          status: task.status,
+        },
       };
     }
 

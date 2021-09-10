@@ -5,13 +5,13 @@ import {
   Fab,
   Grid,
   Icon,
-  Typography,
+  Typography
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
 import styles from "./styles";
 
 function TaskItem(props) {
-  const { classes, task, status, key } = props;
+  const { classes, task, status, key,onEdit } = props;
   const { title, description } = task;
 
   return (
@@ -34,6 +34,7 @@ function TaskItem(props) {
             aria-label="Edit"
             className={classes.fab}
             size="small"
+            onClick={onEdit}
           >
             <Icon fontSize="small">edit_icon</Icon>
           </Fab>

@@ -75,3 +75,12 @@ export const addTaskFailed = (error) => {
     payload: { error },
   };
 };
+
+export const setEditingTask = (task) => {
+  return {
+    type: taskConstants.SET_TASK_EDITING,
+    payload: {
+      task,
+    },
+  };
+};
