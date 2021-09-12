@@ -79,16 +79,15 @@ const reducer = (state = initialState, action) => {
       const index = listTasks.findIndex((item) => item.id === data.id);
 
       if (index !== -1) {
-        // const newList = [
-        //   ...listTasks.slice(0, index),
-        //   data,
-        //   ...listTasks.slice(index + 1),
-        // ];
-        // return {
-        //   ...state,
-        //   listTasks: newList,
-        // };
-        listTasks[index] = data;
+        const newList = [
+          ...listTasks.slice(0, index),
+          data,
+          ...listTasks.slice(index + 1),
+        ];
+        return {
+          ...state,
+          listTasks: newList,
+        };
       }
       return {
         ...state,
