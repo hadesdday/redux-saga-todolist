@@ -1,18 +1,6 @@
 {
   "tasks": [
     {
-      "title": "Learn cooking",
-      "description": "learn how to cook some delicous food for mah world",
-      "status": 2,
-      "id": 1
-    },
-    {
-      "title": "Learn reactjs",
-      "description": "Learning reactjsssssss...",
-      "status": 0,
-      "id": 2
-    },
-    {
       "title": "Learn reactjss",
       "description": "Learning reactjsssssss...",
       "status": 1,
@@ -25,10 +13,16 @@
       "id": 4
     },
     {
-      "title": "weasdw",
-      "description": "dw",
-      "status": 1,
-      "id": 5
+      "title": "asdasa",
+      "description": "ad",
+      "status": 0,
+      "id": 6
+    },
+    {
+      "title": "asdasd",
+      "description": "awd",
+      "status": 0,
+      "id": 8
     }
   ]
 }

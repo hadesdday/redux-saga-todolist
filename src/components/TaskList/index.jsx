@@ -4,7 +4,7 @@ import TaskItem from "../TaskItem";
 import styles from "./styles";
 
 function TaskList(props) {
-  const { classes, tasks, status, onEdit } = props;
+  const { classes, tasks, status, onEdit,onDelete } = props;
 
   return (
     <>
@@ -21,6 +21,7 @@ function TaskList(props) {
                 task={task}
                 status={status}
                 onEdit={() => onEdit(task)}
+                onDelete ={()=>onDelete(task)}
               />
             );
           })}

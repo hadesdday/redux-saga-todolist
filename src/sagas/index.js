@@ -12,9 +12,13 @@ import { hideModal } from "../actions/modal";
 import {
   addTaskFailed,
   addTaskSuccess,
+  deleteTask,
+  deleteTaskFailed,
+  deleteTaskSuccess,
   fetchTasks,
   fetchTasksFailed,
   fetchTasksSuccess,
+  updateTaskFailed,
   updateTaskSuccess,
 } from "../actions/task";
 import { hideLoading, showLoading } from "../actions/ui";
@@ -59,9 +63,6 @@ function* watchFetchTasksAction() {
   }
 }
 
-function* watchCreateTaskAction() {
-  console.log("Watching create task action ...");
-}
 //do ta dung generator nay` cho takeLatest(filter...) ben duoi nen generator nay nhan duoc payload cua action filterTask
 function* filterTaskSaga({ payload }) {
   yield delay(500, true);
@@ -126,13 +127,29 @@ function* updateTaskSaga({ payload }) {
   yield put(hideLoading());
 }
 
+function* deleteTaskSaga({ payload }) {
+  const { id } = payload;
+
+  yield put(showLoading());
+  const res = yield call(taskApis.deleteTask, id);
+  const { data, status: statusCode } = res;
+  if (statusCode === STATUS_CODE.SUCCESS) {
+    yield put(deleteTaskSuccess(id));
+    yield put(hideModal());
+  } else {
+    yield put(deleteTaskFailed(data));
+  }
+  yield delay(1000);
+  yield put(hideLoading());
+}
+
 function* rootSaga() {
   yield fork(watchFetchTasksAction); // background process
-  yield fork(watchCreateTaskAction);
   //action filterTask luon duoc lang nghe nho takeLatest
   yield takeLatest(taskTypes.FILTER_TASK, filterTaskSaga);
   yield takeEvery(taskTypes.ADD_TASK, addTaskSaga);
   yield takeLatest(taskTypes.UPDATE_TASK, updateTaskSaga);
+  yield takeLatest(taskTypes.DELETE_TASK, deleteTaskSaga);
   //takeEvery : goi lien tuc khong can biet la action truoc do da chay xong chua
   //yield takeEvery(taskTypes.FILTER_TASK, filterTaskSaga);
 }
