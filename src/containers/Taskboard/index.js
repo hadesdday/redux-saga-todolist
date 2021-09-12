@@ -28,11 +28,7 @@ function Taskboard(props) {
   const { listTask } = props;
 
   function handleEditTask(task) {
-    setEditingTask({
-      title: task.title,
-      description: task.description,
-      status: task.status,
-    });
+    setEditingTask(task);
     showModal();
     changeModalTitle("Edit a task from your list");
     changeModalContent(<TaskForm />);

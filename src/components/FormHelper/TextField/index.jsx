@@ -1,7 +1,7 @@
 import { makeStyles, TextField } from "@material-ui/core";
 import { Field } from "react-final-form";
 
-function renderTextField(props) {
+function RenderTextField(props) {
   const { multiline, maxRows, label } = props;
 
   const useHelperTextStyles = makeStyles(() => ({
@@ -43,4 +43,4 @@ function renderTextField(props) {
   );
 }
 
-export default renderTextField;
+export default RenderTextField;

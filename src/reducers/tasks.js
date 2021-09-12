@@ -4,11 +4,7 @@ import { toastError } from "../helpers/toastHelper";
 
 const initialState = {
   listTasks: [],
-  taskEditing: {
-    title: "",
-    description: "",
-    status: STATUSES[0].value,
-  },
+  taskEditing: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -68,14 +64,45 @@ const reducer = (state = initialState, action) => {
       const { task } = action.payload;
       return {
         ...state,
-        taskEditing: {
-          title: task.title,
-          description: task.description,
-          status: task.status,
-        },
+        taskEditing: task,
+      };
+    }
+    case taskConstants.UPDATE_TASK: {
+      return {
+        ...state,
       };
     }
 
+    case taskConstants.UPDATE_TASK_SUCCESS: {
+      const { data } = action.payload;
+      const { listTasks } = state;
+      const index = listTasks.findIndex((item) => item.id === data.id);
+
+      if (index !== -1) {
+        // const newList = [
+        //   ...listTasks.slice(0, index),
+        //   data,
+        //   ...listTasks.slice(index + 1),
+        // ];
+        // return {
+        //   ...state,
+        //   listTasks: newList,
+        // };
+        listTasks[index] = data;
+      }
+      return {
+        ...state,
+        listTasks,
+      };
+    }
+
+    case taskConstants.UPDATE_TASK_FAILED: {
+      const { error } = action.payload;
+      toastError(error);
+      return {
+        ...state,
+      };
+    }
     default:
       return state;
   }
