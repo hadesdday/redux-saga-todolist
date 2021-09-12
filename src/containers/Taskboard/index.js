@@ -1,4 +1,4 @@
-import { Button, Grid, withStyles } from "@material-ui/core";
+import { Box, Button, Grid, withStyles } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
@@ -15,11 +15,11 @@ function Taskboard(props) {
   const { classes } = props;
 
   const { modalActionsCreators } = props;
-  const { showModal, changeModalTitle, changeModalContent } =
+  const { showModal, changeModalTitle, changeModalContent, hideModal } =
     modalActionsCreators;
 
   const { taskActionCreators } = props;
-  const { fetchTasks, setEditingTask } = taskActionCreators;
+  const { fetchTasks, setEditingTask, deleteTask } = taskActionCreators;
 
   useEffect(() => {
     fetchTasks();
@@ -32,6 +32,37 @@ function Taskboard(props) {
     showModal();
     changeModalTitle("Edit a task from your list");
     changeModalContent(<TaskForm />);
+  }
+
+  function handleDeleteTask(task) {
+    deleteTask(task.id);
+    hideModal();
+  }
+
+  function showModalDeleteTask(task) {
+    showModal();
+    changeModalTitle("Delete task");
+    changeModalContent(
+      <div className={classes.confirmModal}>
+        Are you sure you want to delete permanently this task ?
+        <Box display="flex" flexDirection="row-reverse" mt={2}>
+          <Box ml={1}>
+            <Button variant="contained" onClick={hideModal}>
+              Cancel
+            </Button>
+          </Box>
+          <Box>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => handleDeleteTask(task)}
+            >
+              OK
+            </Button>
+          </Box>
+        </Box>
+      </div>
+    );
   }
 
   function renderBoard() {
@@ -48,6 +79,7 @@ function Taskboard(props) {
               tasks={listFiltered}
               status={status}
               onEdit={handleEditTask}
+              onDelete={showModalDeleteTask}
             />
           );
         })}

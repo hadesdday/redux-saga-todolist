@@ -11,7 +11,7 @@ import { withStyles } from "@material-ui/styles";
 import styles from "./styles";
 
 function TaskItem(props) {
-  const { classes, task, status, key,onEdit } = props;
+  const { classes, task, status, key,onEdit,onDelete } = props;
   const { title, description } = task;
 
   return (
@@ -38,7 +38,7 @@ function TaskItem(props) {
           >
             <Icon fontSize="small">edit_icon</Icon>
           </Fab>
-          <Fab color="secondary" aria-label="Delete" size="small">
+          <Fab color="secondary" aria-label="Delete" size="small" onClick={onDelete}>
             <Icon fontSize="small">delete</Icon>
           </Fab>
         </CardActions>

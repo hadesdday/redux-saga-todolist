@@ -1,6 +1,6 @@
 import { STATUSES } from "../constants";
 import * as taskConstants from "../constants/task";
-import { toastError } from "../helpers/toastHelper";
+import { toastError, toastSuccess } from "../helpers/toastHelper";
 
 const initialState = {
   listTasks: [],
@@ -46,6 +46,7 @@ const reducer = (state = initialState, action) => {
 
     case taskConstants.ADD_TASK_SUCCESS: {
       const { data } = action.payload;
+      toastSuccess("Successfully added new item to your list");
       return {
         ...state,
         listTasks: [data].concat(state.listTasks),
@@ -84,6 +85,7 @@ const reducer = (state = initialState, action) => {
           data,
           ...listTasks.slice(index + 1),
         ];
+        toastSuccess("Successfully updated your task");
         return {
           ...state,
           listTasks: newList,
@@ -96,6 +98,30 @@ const reducer = (state = initialState, action) => {
     }
 
     case taskConstants.UPDATE_TASK_FAILED: {
+      const { error } = action.payload;
+      toastError(error);
+      return {
+        ...state,
+      };
+    }
+
+    case taskConstants.DELETE_TASK: {
+      return {
+        ...state,
+      };
+    }
+
+    case taskConstants.DELETE_TASK_SUCCESS: {
+      const { data: id } = action.payload;
+      const { listTasks } = state;
+      toastSuccess("Successfully deleted your task");
+      return {
+        ...state,
+        listTasks: listTasks.filter((item) => item.id !== id),
+      };
+    }
+
+    case taskConstants.DELETE_TASK_FAILED: {
       const { error } = action.payload;
       toastError(error);
       return {
