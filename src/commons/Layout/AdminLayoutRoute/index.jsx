@@ -9,7 +9,7 @@ function AdminLayoutRoute(props) {
         {...remainProps}
         render={(routeProps) => {
           return (
-            <Dashboard>
+            <Dashboard {...remainProps}>
               <YourComponent {...routeProps} />
             </Dashboard>
           );

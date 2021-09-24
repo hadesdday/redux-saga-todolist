@@ -10,6 +10,8 @@ const theme = createTheme({
     white: "#fff",
     lightPrimary: "#4791db",
     darkPrimary: "#3f51b5",
+    defaultColor: "#000000",
+    transparentBlur: "rgba(0,0,0,0.1)",
   },
   typography: {
     fontFamily: "Roboto",
